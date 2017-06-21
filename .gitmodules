@@ -1,0 +1,6 @@
+[submodule "module/dependencies/xxtea"]
+	path = module/dependencies/xxtea
+	url = https://github.com/xxtea/xxtea-c
+[submodule "module/dependencies/ngx_devel_kit"]
+	path = module/dependencies/ngx_devel_kit
+	url = https://github.com/simpl/ngx_devel_kit

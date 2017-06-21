@@ -1,0 +1,8 @@
+ngx_addon_name=ngx_http_url_protector_module
+have=NDK_SET_VAR . auto/have
+ngx_module_type=HTTP
+ngx_module_name=ngx_http_url_protector_module
+ngx_module_srcs="$ngx_addon_dir/ngx_http_url_protector_module.c \
+                 $ngx_addon_dir/ngx_http_set_decrypt_url.c \
+                 $ngx_addon_dir/dependencies/xxtea/xxtea.c"
+. auto/module
