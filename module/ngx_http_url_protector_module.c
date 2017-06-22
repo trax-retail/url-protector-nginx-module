@@ -1,27 +1,27 @@
 #include "ngx_http_url_protector_module.h"
 #include <ndk.h>
-#include "ngx_http_set_decrypt_url.h"
+#include "ngx_http_set_decrypted_str.h"
 
 static void *ngx_http_url_protector_create_loc_conf(ngx_conf_t *cf);
 
 static char *ngx_http_url_protector_merge_loc_conf(ngx_conf_t *cf, void *parent, void *child);
 
-static ndk_set_var_t ngx_http_url_protector_set_decrypt_url_filter = {
+static ndk_set_var_t ngx_http_url_protector_set_decrypted_str_filter = {
     NDK_SET_VAR_VALUE,
-    (void *) ngx_http_url_protector_set_decrypt_url,
+    (void *) ngx_http_url_protector_set_decrypted_str,
     1,
     NULL
 };
 
 static ngx_command_t ngx_http_url_protector_commands[] = {
     {
-        ngx_string("set_decrypt_url"),
+        ngx_string("set_decrypted_str"),
         NGX_HTTP_MAIN_CONF | NGX_HTTP_SRV_CONF | NGX_HTTP_SIF_CONF | NGX_HTTP_LOC_CONF | NGX_HTTP_LIF_CONF |
         NGX_CONF_TAKE12,
         ndk_set_var_value,
         0,
         0,
-        &ngx_http_url_protector_set_decrypt_url_filter
+        &ngx_http_url_protector_set_decrypted_str_filter
     },
     {
         ngx_string("set_decryption_key"),

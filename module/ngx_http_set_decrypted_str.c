@@ -1,10 +1,10 @@
 #include <ndk.h>
-#include "ngx_http_set_decrypt_url.h"
+#include "ngx_http_set_decrypted_str.h"
 #include "dependencies/xxtea/xxtea.h"
 #include "ngx_http_url_protector_module.h"
 
 ngx_int_t
-ngx_http_url_protector_set_decrypt_url(ngx_http_request_t *r, ngx_str_t *res, ngx_http_variable_value_t *v) {
+ngx_http_url_protector_set_decrypted_str(ngx_http_request_t *r, ngx_str_t *res, ngx_http_variable_value_t *v) {
     ngx_str_t src;
 
     src.len = v->len;
