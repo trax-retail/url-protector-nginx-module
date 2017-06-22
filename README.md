@@ -1,31 +1,43 @@
 # URL Protector
 
-This module allow nginx to decrypt strings encrypted with [xxtea](https://en.wikipedia.org/wiki/XXTEA) algorithm.
+This module allow [nginx](https://www.nginx.com/) to decrypt strings encrypted with [xxtea](https://en.wikipedia.org/wiki/XXTEA) algorithm.
 
 ## Installation
 
-1. `git clone git@bitbucket.org:traxtechnology/url-protector-nginx-module.git`
-2. `git submodule update --init --recursive`
-3. `./build.sh`
+```bash
+git clone git@bitbucket.org:traxtechnology/url-protector-nginx-module.git
+git submodule update --init --recursive
+sudo apt-get install build-essential zlib1g-dev libpcre3-dev libssl-dev libxslt1-dev libxml2-dev libgd2-xpm-dev libgeoip-dev libgoogle-perftools-dev libperl-dev
+sudo ./install.sh
+```
+__Note:__ you can use custom nginx configuration, just copy and modify `install.sh` as you wish.
 
 ## Usage
 
 Load modules in `nginx.conf`:
 
 ```
-load_module /path/to/modules/ndk_http_module.so;
-load_module /path/to/modules/ngx_http_url_protector_module.so;
+load_module /usr/lib/nginx/modules/ndk_http_module.so;
+load_module /usr/lib/nginx/modules/ngx_http_url_protector_module.so;
 ```
 
-In server config:
+__Note:__:
+
+- Path `/usr/lib/nginx/modules/` may be different.
+- Usually path to your `nginx.conf` is `/etc/nginx/nginx.conf`.
+
+Add to server config:
 
 ```
 location = /test {
     set_decryption_key 1234567890;
-    set_decrypt_url $arg_decrypted_url $arg_url;
+    set_decrypted_str $arg_decrypted_url $arg_url;
+    resolver 8.8.8.8;
     proxy_pass $arg_decrypted_url;
 }
 ```
+
+__Note:__ use your own resolver to avoid [DNS spoofing attack](http://blog.zorinaq.com/nginx-resolver-vulns/#attack-scenarios). Use `nm-tool | grep DNS` to determine which one you use.
 
 ## Encryption Example
 
@@ -34,10 +46,10 @@ const xxtea = require('xxtea-node');
 
 const url = 'https://en.wikipedia.org/wiki/XXTEA';
 const key = '1234567890';
-const encryptedData = xxtea.encrypt(xxtea.toBytes(str), xxtea.toBytes(key));
+const encryptedData = xxtea.encrypt(xxtea.toBytes(url), xxtea.toBytes(key));
 const encryptedStr = new Buffer(encryptedData).toString('base64');
 
-console.log(`http://localhost:80/test?url=${encryptedStr}`);
+console.log(`http://localhost/test?url=${encryptedStr}`);
 ````
 
 __Note:__
@@ -48,5 +60,9 @@ __Note:__
 
 ## Dependencies
 
+- [nginx](https://www.nginx.com/) version 1.11.5 or greater.
 - [Nginx Development Kit](https://github.com/simpl/ngx_devel_kit)
 - [XXTEA for C](https://github.com/xxtea/xxtea-c)
+
+## TODO
+
