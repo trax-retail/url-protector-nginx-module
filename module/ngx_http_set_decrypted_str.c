@@ -16,7 +16,7 @@ ngx_http_url_protector_set_decrypted_str(ngx_http_request_t *r, ngx_str_t *res, 
     ndk_palloc_re(res_b64.data, r->pool, res_b64.len);
 
     if (ngx_decode_base64(&res_b64, &src) != NGX_OK) {
-        ngx_log_error(NGX_LOG_ERR, r->connection->log, 0, "set_decode_base64: invalid value"); // TODO
+        ngx_log_error(NGX_LOG_ERR, r->connection->log, 0, "set_decrypted_str: invalid base64 value");
         return NGX_ERROR;
     }
 
@@ -26,7 +26,10 @@ ngx_http_url_protector_set_decrypted_str(ngx_http_request_t *r, ngx_str_t *res, 
     size_t out_len;
     char *decrypt_data = xxtea_decrypt(res_b64.data, res_b64.len, conf->decryption_key.data, &out_len);
 
-    // TODO: check errors somehow
+    if (decrypt_data == NULL) {
+        ngx_log_error(NGX_LOG_ERR, r->connection->log, 0, "set_decrypted_str: invalid xxtea key or value");
+        return NGX_ERROR;
+    }
 
     res->len = out_len;
     ndk_palloc_re(res->data, r->pool, res->len);

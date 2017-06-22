@@ -2,7 +2,6 @@
 #define NGX_HTTP_URL_PROTECTOR_MODULE_H
 
 
-// TODO: #include <ndk.h>
 #include <ngx_core.h>
 #include <ngx_config.h>
 #include <ngx_http.h>

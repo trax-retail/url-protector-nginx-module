@@ -21,11 +21,6 @@ load_module /usr/lib/nginx/modules/ndk_http_module.so;
 load_module /usr/lib/nginx/modules/ngx_http_url_protector_module.so;
 ```
 
-__Note:__:
-
-- Path `/usr/lib/nginx/modules/` may be different.
-- Usually path to your `nginx.conf` is `/etc/nginx/nginx.conf`.
-
 Add to server config:
 
 ```
@@ -37,7 +32,11 @@ location = /test {
 }
 ```
 
-__Note:__ use your own resolver to avoid [DNS spoofing attack](http://blog.zorinaq.com/nginx-resolver-vulns/#attack-scenarios). Use `nm-tool | grep DNS` to determine which one you use.
+__Note:__ 
+
+- Path `/usr/lib/nginx/modules/` may be different in your system.
+- Usually, path to your `nginx.conf` is `/etc/nginx/nginx.conf`.
+- Use your own resolver to avoid [DNS spoofing attack](http://blog.zorinaq.com/nginx-resolver-vulns/#attack-scenarios). Use `nm-tool | grep DNS` to determine which one you use.
 
 ## Encryption Example
 
@@ -50,7 +49,8 @@ const encryptedData = xxtea.encrypt(xxtea.toBytes(url), xxtea.toBytes(key));
 const encryptedStr = new Buffer(encryptedData).toString('base64');
 
 console.log(`http://localhost/test?url=${encryptedStr}`);
-````
+// http://localhost/test?url=Xhy4HUCNVpWRG4dDN1KS9Y8mrHoz6IhJBirn2qcDtl9lBGz6OiFwgA==
+```
 
 __Note:__
 
@@ -63,6 +63,3 @@ __Note:__
 - [nginx](https://www.nginx.com/) version 1.11.5 or greater.
 - [Nginx Development Kit](https://github.com/simpl/ngx_devel_kit)
 - [XXTEA for C](https://github.com/xxtea/xxtea-c)
-
-## TODO
-
