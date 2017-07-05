@@ -1,6 +1,8 @@
 # URL Protector
 
-This module allow [nginx](https://www.nginx.com/) to decrypt strings encrypted with [xxtea](https://en.wikipedia.org/wiki/XXTEA) algorithm.
+This module allow [nginx](https://www.nginx.com/) to decrypt strings encrypted with [xxtea](https://en.wikipedia.org/wiki/XXTEA) algorithm. This is useful to hide actual URLs from client.
+
+![](images/flow.png)
 
 ## Installation
 
