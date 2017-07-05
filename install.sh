@@ -1,6 +1,14 @@
 #!/usr/bin/env bash
 
 #
+# Create build folder if not exists.
+#
+
+if [ ! -f "build" ]; then
+    mkdir build
+fi
+
+#
 # Set and check version.
 #
 
@@ -38,16 +46,25 @@ fi
 cd ..
 
 #
-# Build and install.
+# Copy default configure script if not exists.
 #
 
 if [ ! -f "nginx_configure.sh" ]; then
     cp nginx_configure.sh.default nginx_configure.sh
 fi
 
+#
+# Build and install (or run tests).
+#
+
 cd "build/nginx-$NGINX_VERSION"
 
 ./../../nginx_configure.sh
 
 make
-make install
+if [ $TEST = "true" ]; then
+    cd ../../
+    TEST_NGINX_BINARY="./build/nginx-$NGINX_VERSION/objs/nginx" prove ./t
+else
+    make install
+fi

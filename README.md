@@ -27,10 +27,10 @@ Add to server config:
 
 ```
 location = /test {
-    set_unescape_uri $arg_url;
+    set_unescape_uri $arg_url_unescaped $arg_url;
 
     set_decryption_key 1234567890;
-    set_decrypted_str $arg_decrypted_url $arg_url;
+    set_decrypted_str $arg_decrypted_url $arg_url_unescaped;
 
     resolver 8.8.8.8;
     proxy_pass $arg_decrypted_url;
@@ -63,6 +63,12 @@ __Note:__
 - We use [xxtea-node](https://www.npmjs.com/package/xxtea-node) npm package in this example.
 - Decryption key length should be not less what average URL size.
 - If your URLs are predictable, add random part to avoid [chosen-plaintext attack](https://en.wikipedia.org/wiki/Chosen-plaintext_attack).
+
+## Tests
+
+```bash
+sudo TEST=true ./install.sh
+```
 
 ## Dependencies
 

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 git clone https://github.com/openresty/set-misc-nginx-module ../set-misc-nginx-module
+git clone https://github.com/openresty/echo-nginx-module ../echo-nginx-module
 
 ./configure \
     --prefix=/usr/share/nginx \
@@ -39,4 +40,5 @@ git clone https://github.com/openresty/set-misc-nginx-module ../set-misc-nginx-m
     --with-mail_ssl_module \
     --add-dynamic-module=../../module/dependencies/ngx_devel_kit \
     --add-dynamic-module=../../module \
-    --add-dynamic-module=../set-misc-nginx-module
+    --add-dynamic-module=../set-misc-nginx-module \
+    --add-dynamic-module=../echo-nginx-module
